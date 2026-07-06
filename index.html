@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiDepot - Desa Potanga</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e3a8a">
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-page" class="flex items-center justify-center min-h-screen px-4">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+      <h2 class="text-3xl font-bold text-center text-blue-800 mb-2">SiDepot</h2>
+      <p class="text-gray-500 text-center mb-6">Sistem Informasi Desa Potanga</p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">ID / NIK</label>
+          <input type="text" id="username" class="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Password</label>
+          <input type="password" id="password" class="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+        <button onclick="login()" class="w-full bg-blue-700 text-white p-3 rounded-xl font-bold hover:bg-blue-800 transition">Masuk</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD -->
+  <div id="main-dashboard" class="hidden min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-blue-800 text-white p-4 shadow-md flex justify-between items-center">
+      <h1 class="text-xl font-bold">SiDepot Potanga</h1>
+      <div class="flex items-center gap-4">
+        <span id="user-display" class="text-sm bg-blue-900 px-3 py-1 rounded-full"></span>
+        <button onclick="logout()" class="text-sm bg-red-600 px-3 py-1 rounded-lg hover:bg-red-700">Keluar</button>
+      </div>
+    </nav>
+
+    <div class="flex-1 p-4 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- LEFT/MAIN COLUMN: CONTENT -->
+      <div class="md:col-span-2 space-y-6">
+        
+        <!-- PENGUMUMAN (Directly on Home) -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-l-4 border-l-amber-500">
+          <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">📢 Pengumuman Desa</h3>
+          <div id="pengumuman-container" class="space-y-3">
+            <p class="text-gray-500 italic">Memuat pengumuman terbaru...</p>
+          </div>
+        </div>
+
+        <!-- LAYANAN MANDIRI (WARGA) -->
+        <div id="warga-menu" class="bg-white p-6 rounded-2xl shadow-sm space-y-4">
+          <h3 class="text-xl font-bold text-gray-800 border-b pb-2">📄 Pengajuan Surat & Laporan</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Form Laporan -->
+            <div class="p-4 border rounded-xl bg-red-50">
+              <h4 class="font-bold text-red-800 mb-1">🚨 Laporan Warga</h4>
+              <p class="text-xs text-gray-600 mb-3">Aduan infrastruktur, keamanan, dll.</p>
+              <textarea id="isi-laporan" placeholder="Tulis laporan Anda..." class="w-full p-2 text-sm border rounded-lg mb-2 outline-none"></textarea>
+              <button onclick="kirimSurat('Laporan Warga', {laporan: document.getElementById('isi-laporan').value})" class="bg-red-600 text-white text-xs px-3 py-2 rounded-lg font-bold w-full">Kirim Aduan</button>
+            </div>
+
+            <!-- Layanan Surat (Accordion Ringkas) -->
+            <div class="sm:col-span-2 space-y-2">
+              <label class="block font-semibold text-gray-700 text-sm">Pilih Jenis Surat:</label>
+              <select id="jenis-surat" onchange="updateSyarat()" class="w-full p-3 border rounded-xl bg-gray-50 text-sm">
+                <option value="">-- Pilih Surat --</option>
+                <optgroup label="Administrasi Kependudukan">
+                  <option value="Domisili">Surat Keterangan Domisili</option>
+                  <option value="Pindah">Surat Keterangan Pindah</option>
+                  <option value="Kelahiran/Kematian">Surat Keterangan Kelahiran/Kematian</option>
+                </optgroup>
+                <optgroup label="Sosial & Ekonomi">
+                  <option value="SKTM">Surat Keterangan Tidak Mampu (SKTM)</option>
+                  <option value="SKU">Surat Keterangan Usaha (SKU)</option>
+                  <option value="Penghasilan">Surat Keterangan Penghasilan</option>
+                </optgroup>
+                <optgroup label="Hukum & Pertanahan">
+                  <option value="Ahli Waris">Surat Keterangan Ahli Waris</option>
+                  <option value="SKT">Surat Keterangan Tanah (SKT)</option>
+                  <option value="Beda Nama">Surat Keterangan Beda Nama</option>
+                </optgroup>
+                <optgroup label="Pengantar">
+                  <option value="SKCK">Surat Pengantar SKCK</option>
+                  <option value="Izin Keramaian">Surat Pengantar Izin Keramaian</option>
+                  <option value="Nikah">Surat Pengantar Nikah</option>
+                </optgroup>
+              </select>
+
+              <!-- Box Persyaratan & Template -->
+              <div id="box-syarat" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm">
+                <h5 class="font-bold text-blue-900 mb-1">📋 Persyaratan Syarat & Template:</h5>
+                <ul id="list-syarat" class="list-disc list-inside text-gray-700 mb-3 space-y-1"></ul>
+                <input type="text" id="input-tambahan" placeholder="Catatan/Keperluan pengajuan..." class="w-full p-2 border rounded-lg bg-white outline-none">
+                <button onclick="ajukanSurat()" class="mt-3 bg-blue-700 text-white px-4 py-2 rounded-lg font-bold w-full">Ajukan ke Kepala Desa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL PERSETUJUAN KEPALA DESA (ADMIN) -->
+        <div id="admin-menu" class="hidden bg-white p-6 rounded-2xl shadow-sm">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">✍️ Panel Persetujuan Kepala Desa</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr class="bg-gray-100 text-gray-700 border-b">
+                  <th class="p-3">Tanggal</th>
+                  <th class="p-3">Pengaju</th>
+                  <th class="p-3">Jenis</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tabel-persetujuan" class="divide-y">
+                <!-- Data dari Sheets -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: TRACKING STATUS -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm h-fit">
+        <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">⏱️ Status Pengajuan Anda</h3>
+        <div id="tracking-container" class="space-y-3 max-h-96 overflow-y-auto text-sm">
+          <!-- List tracking -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
+    const API_URL = "https://script.google.com/macros/s/AKfycbzuxt5H043grO6eRh6EdwKheYnosvryp4HkvjQGBI76YWWBB097nzPfg_5rLu9Ea0JWEw/exec"; 
+    
+    let currentUser = { id: "", role: "", nama: "" };
+
+    const SYARAT_DATA = {
+      "Domisili": ["KTP & KK Asli", "Surat Pengantar RT/RW"],
+      "Pindah": ["KK Asli", "KTP", "Alamat Tujuan Lengkap"],
+      "Kelahiran/Kematian": ["Surat Pengantar RS/Bidan/RT", "KK & KTP Orang Tua / Almarhum"],
+      "SKTM": ["KK & KTP", "Surat Pengantar RT", "Pernyataan Miskin Bermaterai"],
+      "SKU": ["KTP", "Foto Tempat Usaha", "Surat Pengantar RT"],
+      "Penghasilan": ["KTP", "Surat Pernyataan Penghasilan ditandatangani"],
+      "Ahli Waris": ["Surat Kematian Pewaris", "KK & KTP Semua Ahli Waris", "Pernyataan Waris dari KUA/Notaris"],
+      "SKT": ["Bukti Kepemilikan (Segel/Kwitansi)", "KTP Pemilik", "Keterangan Batas Tanah"],
+      "Beda Nama": ["KTP & KK", "Dokumen yang salah nama (Ijazah/Sertifikat)"],
+      "SKCK": ["KTP & KK", "Foto 4x6 Background Merah"],
+      "Izin Keramaian": ["KTP Pemohon", "Surat Pengantar RT/RW", "Proposal Acara Singkat"],
+      "Nikah": ["N1, N2, N4 dari Kelurahan/RT", "KTP & KK Calon Pengantin", "Akte Kelahiran"]
+    };
+
+    function login() {
+      const id = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      
+      // Simulasi/Fungsi hit API Sheets
+      fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "login", id: id, password: pass })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.status === "success") {
+          currentUser = { id: id, role: data.role, nama: data.nama };
+          initDashboard();
+        } else {
+          alert("ID atau Password salah!");
+        }
+      }).catch(() => {
+        // Fallback demo lokal jika API belum siap
+        if(id === "admin" || id === "warga") {
+          currentUser = { id: id, role: id, nama: id === "admin" ? "Kepala Desa" : "Warga Potanga" };
+          initDashboard();
+        }
+      });
+    }
+
+    function initDashboard() {
+      document.getElementById("login-page").classList.add("hidden");
+      document.getElementById("main-dashboard").classList.remove("hidden");
+      document.getElementById("user-display").innerText = `${currentUser.nama} (${currentUser.role.toUpperCase()})`;
+
+      if (currentUser.role === "admin") {
+        document.getElementById("admin-menu").classList.remove("hidden");
+        document.getElementById("warga-menu").classList.add("hidden");
+      } else {
+        document.getElementById("admin-menu").classList.add("hidden");
+        document.getElementById("warga-menu").classList.remove("hidden");
+      }
+      loadData();
+    }
+
+    function updateSyarat() {
+      const jenis = document.getElementById("jenis-surat").value;
+      const box = document.getElementById("box-syarat");
+      const list = document.getElementById("list-syarat");
+      
+      if(!jenis) { box.classList.add("hidden"); return; }
+      
+      box.classList.remove("hidden");
+      list.innerHTML = SYARAT_DATA[jenis].map(s => `<li>${s}</li>`).join("");
+    }
+
+    function ajukanSurat() {
+      const jenis = document.getElementById("jenis-surat").value;
+      const catatan = document.getElementById("input-tambahan").value;
+      kirimSurat(jenis, { catatan: catatan });
+    }
+
+    function kirimSurat(jenis, detail) {
+      fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "tambah_surat", jenis: jenis, pengaju: currentUser.nama, detail: detail })
+      }).then(() => {
+        alert("Pengajuan Berhasil Dikirim!");
+        loadData();
+      });
+    }
+
+    function loadData() {
+      // Load Data Pengumuman & Surat dari Sheets
+      fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "get_data" })
+      })
+      .then(res => res.json())
+      .then(data => {
+        // Render Pengumuman
+        const pContainer = document.getElementById("pengumuman-container");
+        pContainer.innerHTML = data.pengumuman.slice(1).map(p => `
+          <div class="border-b pb-2">
+            <h4 class="font-bold text-gray-800">${p[2]} <span class="text-xs font-normal text-gray-400">(${p[1]})</span></h4>
+            <p class="text-sm text-gray-600 mt-1">${p[3]}</p>
+          </div>
+        `).join("");
+
+        // Render Tracking & Admin Table
+        const tContainer = document.getElementById("tracking-container");
+        const adminTable = document.getElementById("tabel-persetujuan");
+        
+        tContainer.innerHTML = "";
+        adminTable.innerHTML = "";
+
+        data.surat.slice(1).forEach(s => {
+          // Tracking untuk Warga
+          tContainer.innerHTML += `
+            <div class="p-3 bg-gray-50 rounded-xl border">
+              <div class="flex justify-between font-bold"><span>${s[2]}</span><span class="text-xs px-2 py-0.5 rounded ${s[5] === 'Pending' ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'}">${s[5]}</span></div>
+              <p class="text-xs text-gray-500 mt-1">Tanggal: ${s[1]}</p>
+            </div>
+          `;
+
+          // Table untuk Admin (Kepala Desa)
+          if(s[5] === "Pending") {
+            adminTable.innerHTML += `
+              <tr class="border-b hover:bg-gray-50">
+                <td class="p-3">${s[1]}</td>
+                <td class="p-3 font-semibold">${s[3]}</td>
+                <td class="p-3">${s[2]}</td>
+                <td class="p-3 text-amber-600 font-bold">${s[5]}</td>
+                <td class="p-3"><button onclick="approve('${s[0]}')" class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-lg font-bold hover:bg-emerald-700">Setujui</button></td>
+              </tr>
+            `;
+          }
+        });
+      });
+    }
+
+    function approve(id) {
+      fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "approve_surat", id: id })
+      }).then(() => {
+        alert("Surat Berhasil Disetujui Kepala Desa!");
+        loadData();
+      });
+    }
+
+    function logout() {
+      document.getElementById("main-dashboard").classList.add("hidden");
+      document.getElementById("login-page").classList.remove("hidden");
+    }
+
+    if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+  </script>
+</body>
+</html>
