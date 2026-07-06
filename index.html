@@ -3,297 +3,258 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SiDepot - Desa Potanga</title>
+  <title>SiDepot - Sistem Informasi Desa Potanga</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e3a8a">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-[#0b0c10] text-white min-h-screen relative overflow-x-hidden selection:bg-purple-500 selection:text-white">
 
-  <!-- LOGIN SCREEN -->
-  <div id="login-page" class="flex items-center justify-center min-h-screen px-4">
-    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-      <h2 class="text-3xl font-bold text-center text-blue-800 mb-2">SiDepot</h2>
-      <p class="text-gray-500 text-center mb-6">Sistem Informasi Desa Potanga</p>
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">ID / NIK</label>
-          <input type="text" id="username" class="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">Password</label>
-          <input type="password" id="password" class="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-        </div>
-        <button onclick="login()" class="w-full bg-blue-700 text-white p-3 rounded-xl font-bold hover:bg-blue-800 transition">Masuk</button>
+  <!-- Efek Cahaya Kosmik/Nebula Latar Belakang -->
+  <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-900/20 blur-[120px] pointer-events-none"></div>
+  <div class="absolute top-[20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-blue-900/15 blur-[150px] pointer-events-none"></div>
+  <!-- Simulasi Planet Besar di Kanan Atas -->
+  <div class="absolute top-[-50px] right-[-100px] w-96 h-96 rounded-full bg-gradient-to-br from-slate-700/30 to-transparent border border-white/5 pointer-events-none hidden lg:block shadow-[inset_-20px_-20px_50px_rgba(0,0,0,0.8)]"></div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between relative z-10">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-bold text-lg shadow-lg shadow-indigo-500/20">
+        🏛️
       </div>
+      <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">SiDepot</span>
     </div>
-  </div>
+    
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+      <a href="#" class="text-white transition">Produk</a>
+      <a href="#" class="hover:text-white transition">Fitur Desa</a>
+      <a href="#" class="hover:text-white transition">Solusi</a>
+      <a href="#" class="hover:text-white transition">Transparansi</a>
+      <a href="#" class="hover:text-white transition">Bantuan</a>
+    </div>
 
-  <!-- MAIN DASHBOARD -->
-  <div id="main-dashboard" class="hidden min-h-screen flex flex-col">
-    <!-- Navbar -->
-    <nav class="bg-blue-800 text-white p-4 shadow-md flex justify-between items-center">
-      <h1 class="text-xl font-bold">SiDepot Potanga</h1>
-      <div class="flex items-center gap-4">
-        <span id="user-display" class="text-sm bg-blue-900 px-3 py-1 rounded-full"></span>
-        <button onclick="logout()" class="text-sm bg-red-600 px-3 py-1 rounded-lg hover:bg-red-700">Keluar</button>
-      </div>
-    </nav>
+    <button class="bg-white text-slate-950 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-200 transition-all shadow-lg shadow-white/5">
+      Mulai Uji Coba
+    </button>
+  </nav>
 
-    <div class="flex-1 p-4 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- HERO SECTION -->
+  <header class="max-w-5xl mx-auto text-center px-6 pt-16 pb-12 relative z-10">
+    <h1 class="text-4xl md:text-6xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.15] bg-gradient-to-b from-white via-white to-slate-500 bg-clip-text text-transparent">
+      Kelola administrasi & layanan desa jauh lebih modern
+    </h1>
+    <p class="mt-6 text-base md:text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
+      SiDepot membantu perangkat Desa Potanga mengatur antrean pelayanan warga, surat keterangan, jadwal staf, serta transparansi anggaran dalam satu ruang kerja digital.
+    </p>
+    
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <button class="bg-slate-900 border border-white/10 text-white px-6 py-3 rounded-full font-medium hover:bg-slate-800 transition flex items-center gap-2 group shadow-xl">
+        Mulai Free Trial 
+        <span class="group-hover:translate-x-1 transition-transform">→</span>
+      </button>
+      <button class="bg-white text-slate-950 px-7 py-3 rounded-full font-medium hover:bg-slate-200 transition shadow-xl">
+        Ajukan Demo Aplikasi
+      </button>
+    </div>
+  </header>
+
+  <!-- INTERACTIVE DASHBOARD PREVIEW (GLASSMORPHISM) -->
+  <section class="max-w-6xl mx-auto px-4 pb-24 relative z-10">
+    <div class="glass-panel rounded-3xl p-4 md:p-6 shadow-2xl flex flex-col lg:flex-row gap-6">
       
-      <!-- LEFT/MAIN COLUMN: CONTENT -->
-      <div class="md:col-span-2 space-y-6">
+      <!-- SIDEBAR DASHBOARD KACA -->
+      <aside class="w-full lg:w-60 flex flex-col gap-6 border-b lg:border-b-0 lg:border-r border-white/10 pb-6 lg:pb-0 lg:pr-6">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-emerald-500/20 text-emerald-400 rounded-lg flex items-center justify-center text-sm">🟢</div>
+          <div>
+            <h4 class="text-sm font-bold tracking-wide">POTANGA HQ</h4>
+            <span class="text-xs text-slate-500">Sistem Informasi</span>
+          </div>
+        </div>
         
-        <!-- PENGUMUMAN (Directly on Home) -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-l-4 border-l-amber-500">
-          <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">📢 Pengumuman Desa</h3>
-          <div id="pengumuman-container" class="space-y-3">
-            <p class="text-gray-500 italic">Memuat pengumuman terbaru...</p>
+        <nav class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-1 text-sm font-medium text-slate-400 pb-2 lg:pb-0">
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/10 text-white whitespace-nowrap">📊 Dashboard Utama</a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 hover:text-white transition whitespace-nowrap">📝 Surat Keterangan</a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 hover:text-white transition whitespace-nowrap">👥 Data Warga</a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 hover:text-white transition whitespace-nowrap">💡 Pengaduan</a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 hover:text-white transition whitespace-nowrap">💰 Keuangan Desa</a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 hover:text-white transition whitespace-nowrap">📋 Laporan Bulanan</a>
+        </nav>
+      </aside>
+
+      <!-- MAIN CONTENT DASHBOARD -->
+      <main class="flex-1 text-slate-900">
+        <!-- Top Action Bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <h2 class="text-xl font-bold text-white tracking-tight">Dashboard Utama</h2>
+          <div class="flex items-center gap-2">
+            <button class="bg-white/10 border border-white/10 text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-white/20 transition flex items-center gap-2">
+              📥 Ekspor Laporan
+            </button>
+            <button class="bg-white/10 border border-white/10 text-white text-xs font-bold w-8 h-8 rounded-xl flex items-center justify-center hover:bg-white/20 transition">⋮</button>
           </div>
         </div>
 
-        <!-- LAYANAN MANDIRI (WARGA) -->
-        <div id="warga-menu" class="bg-white p-6 rounded-2xl shadow-sm space-y-4">
-          <h3 class="text-xl font-bold text-gray-800 border-b pb-2">📄 Pengajuan Surat & Laporan</h3>
+        <!-- 4 Kotak Statis Utama (Putih Bersih Kontras Tinggi) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Form Laporan -->
-            <div class="p-4 border rounded-xl bg-red-50">
-              <h4 class="font-bold text-red-800 mb-1">🚨 Laporan Warga</h4>
-              <p class="text-xs text-gray-600 mb-3">Aduan infrastruktur, keamanan, dll.</p>
-              <textarea id="isi-laporan" placeholder="Tulis laporan Anda..." class="w-full p-2 text-sm border rounded-lg mb-2 outline-none"></textarea>
-              <button onclick="kirimSurat('Laporan Warga', {laporan: document.getElementById('isi-laporan').value})" class="bg-red-600 text-white text-xs px-3 py-2 rounded-lg font-bold w-full">Kirim Aduan</button>
+          <!-- Card 1 -->
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col justify-between min-h-[110px]">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span class="flex items-center gap-1.5">📄 Permohonan Surat</span>
+              <span class="text-slate-400">❯</span>
+            </div>
+            <div class="mt-2 flex items-baseline gap-2">
+              <span class="text-2xl font-bold tracking-tight">32</span>
+              <span class="text-[10px] text-red-500 font-semibold bg-red-50 px-1.5 py-0.5 rounded-md">📉 5% Kemarin</span>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-1">6 surat menunggu verifikasi</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col justify-between min-h-[110px]">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span class="flex items-center gap-1.5">💰 Anggaran Cair</span>
+              <span class="text-slate-400">❯</span>
+            </div>
+            <div class="mt-2 flex items-baseline gap-2">
+              <span class="text-2xl font-bold tracking-tight">Rp1.7M</span>
+              <span class="text-[10px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded-md">📈 9% Bulan Ini</span>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-1">3 program pembangunan aktif</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col justify-between min-h-[110px]">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span class="flex items-center gap-1.5">⏳ Ruang Tunggu</span>
+              <span class="text-slate-400">❯</span>
+            </div>
+            <div class="mt-2">
+              <span class="text-2xl font-bold tracking-tight">5</span>
+              <span class="text-xs text-slate-500 ml-1">Warga sedang antre</span>
+            </div>
+            <!-- Progress Bar Indikator Hijau Sesuai Gambar -->
+            <div class="flex gap-1 mt-2">
+              <div class="h-2 w-full bg-emerald-500 rounded-sm"></div>
+              <div class="h-2 w-full bg-emerald-500 rounded-sm"></div>
+              <div class="h-2 w-full bg-emerald-500 rounded-sm"></div>
+              <div class="h-2 w-full bg-slate-100 rounded-sm"></div>
+              <div class="h-2 w-full bg-slate-100 rounded-sm"></div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col justify-between min-h-[110px]">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span class="flex items-center gap-1.5">⚡ Efisiensi Pelayanan</span>
+              <span class="text-slate-400">❯</span>
+            </div>
+            <div class="mt-2">
+              <span class="text-2xl font-bold tracking-tight">85%</span>
+              <span class="text-[10px] text-slate-500 block">Sangat cepat (Rata-rata 7 mnt)</span>
+            </div>
+            <div class="flex gap-1 mt-2">
+              <div class="h-2 w-full bg-emerald-500 rounded-sm"></div>
+              <div class="h-2 w-full bg-emerald-500 rounded-sm"></div>
+              <div class="h-2 w-full bg-emerald-500 rounded-sm"></div>
+              <div class="h-2 w-full bg-emerald-500 rounded-sm"></div>
+              <div class="h-2 w-full bg-slate-100 rounded-sm"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SPLIT DATA BAWAH (Antrean & Petugas) -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          
+          <!-- Kolom Kiri: Antrean Warga (Lebar 2 Kolom) -->
+          <div class="xl:col-span-2 bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-sm font-bold text-slate-900 tracking-tight">Antrean Warga Saat Ini</h3>
+              <div class="relative">
+                <input type="text" placeholder="Cari nama warga..." class="text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-1 focus:ring-blue-500">
+              </div>
             </div>
 
-            <!-- Layanan Surat (Accordion Ringkas) -->
-            <div class="sm:col-span-2 space-y-2">
-              <label class="block font-semibold text-gray-700 text-sm">Pilih Jenis Surat:</label>
-              <select id="jenis-surat" onchange="updateSyarat()" class="w-full p-3 border rounded-xl bg-gray-50 text-sm">
-                <option value="">-- Pilih Surat --</option>
-                <optgroup label="Administrasi Kependudukan">
-                  <option value="Domisili">Surat Keterangan Domisili</option>
-                  <option value="Pindah">Surat Keterangan Pindah</option>
-                  <option value="Kelahiran/Kematian">Surat Keterangan Kelahiran/Kematian</option>
-                </optgroup>
-                <optgroup label="Sosial & Ekonomi">
-                  <option value="SKTM">Surat Keterangan Tidak Mampu (SKTM)</option>
-                  <option value="SKU">Surat Keterangan Usaha (SKU)</option>
-                  <option value="Penghasilan">Surat Keterangan Penghasilan</option>
-                </optgroup>
-                <optgroup label="Hukum & Pertanahan">
-                  <option value="Ahli Waris">Surat Keterangan Ahli Waris</option>
-                  <option value="SKT">Surat Keterangan Tanah (SKT)</option>
-                  <option value="Beda Nama">Surat Keterangan Beda Nama</option>
-                </optgroup>
-                <optgroup label="Pengantar">
-                  <option value="SKCK">Surat Pengantar SKCK</option>
-                  <option value="Izin Keramaian">Surat Pengantar Izin Keramaian</option>
-                  <option value="Nikah">Surat Pengantar Nikah</option>
-                </optgroup>
-              </select>
+            <div class="space-y-3">
+              <!-- Item Warga 1 -->
+              <div class="flex items-center justify-between p-3 bg-slate-50/60 rounded-xl border border-slate-100">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-purple-100 text-purple-700 font-bold rounded-xl flex items-center justify-center text-xs">JX</div>
+                  <div>
+                    <h5 class="text-xs font-bold text-slate-800">John Xena</h5>
+                    <p class="text-[10px] text-slate-400">NIK: 750101xxxxxx • Pengurusan SKTM</p>
+                  </div>
+                </div>
+                <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">Sudah Hadir</span>
+              </div>
 
-              <!-- Box Persyaratan & Template -->
-              <div id="box-syarat" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm">
-                <h5 class="font-bold text-blue-900 mb-1">📋 Persyaratan Syarat & Template:</h5>
-                <ul id="list-syarat" class="list-disc list-inside text-gray-700 mb-3 space-y-1"></ul>
-                <input type="text" id="input-tambahan" placeholder="Catatan/Keperluan pengajuan..." class="w-full p-2 border rounded-lg bg-white outline-none">
-                <button onclick="ajukanSurat()" class="mt-3 bg-blue-700 text-white px-4 py-2 rounded-lg font-bold w-full">Ajukan ke Kepala Desa</button>
+              <!-- Item Warga 2 -->
+              <div class="flex items-center justify-between p-3 bg-slate-50/60 rounded-xl border border-slate-100">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-blue-100 text-blue-700 font-bold rounded-xl flex items-center justify-center text-xs">SP</div>
+                  <div>
+                    <h5 class="text-xs font-bold text-slate-800">Sofia Patel</h5>
+                    <p class="text-[10px] text-slate-400">NIK: 750102xxxxxx • Surat Pengantar Domisili</p>
+                  </div>
+                </div>
+                <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">Sudah Hadir</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- PANEL PERSETUJUAN KEPALA DESA (ADMIN) -->
-        <div id="admin-menu" class="hidden bg-white p-6 rounded-2xl shadow-sm">
-          <h3 class="text-xl font-bold text-gray-800 mb-4">✍️ Panel Persetujuan Kepala Desa</h3>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr class="bg-gray-100 text-gray-700 border-b">
-                  <th class="p-3">Tanggal</th>
-                  <th class="p-3">Pengaju</th>
-                  <th class="p-3">Jenis</th>
-                  <th class="p-3">Status</th>
-                  <th class="p-3">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="tabel-persetujuan" class="divide-y">
-                <!-- Data dari Sheets -->
-              </tbody>
-            </table>
+          <!-- Kolom Kanan: Ketersediaan Staf Desa -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-bold text-slate-900 tracking-tight">Kehadiran Perangkat Desa</h3>
+                <span class="text-slate-400 text-xs cursor-pointer">⋮</span>
+              </div>
+
+              <div class="space-y-4">
+                <!-- Staf 1 -->
+                <div class="flex items-start justify-between text-xs">
+                  <div>
+                    <h5 class="font-bold text-slate-800">Dr. Charles Aldo</h5>
+                    <p class="text-[10px] text-slate-400">Kepala Urusan Pelayanan</p>
+                    <span class="text-[10px] text-slate-500 block mt-1">🕒 Jam Kerja: 08:00 - 15:30</span>
+                  </div>
+                  <span class="text-[9px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span class="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></span> Loket 1
+                  </span>
+                </div>
+                
+                <hr class="border-slate-100">
+
+                <!-- Staf 2 -->
+                <div class="flex items-start justify-between text-xs">
+                  <div>
+                    <h5 class="font-bold text-slate-800">Dr. Michael Rivera</h5>
+                    <p class="text-[10px] text-slate-400">Sekretaris Desa</p>
+                    <span class="text-[10px] text-slate-500 block mt-1">🕒 Jam Kerja: 09:00 - 14:00</span>
+                  </div>
+                  <span class="text-[9px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
+                    Selesai Tugas
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-      </div>
-
-      <!-- RIGHT COLUMN: TRACKING STATUS -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm h-fit">
-        <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">⏱️ Status Pengajuan Anda</h3>
-        <div id="tracking-container" class="space-y-3 max-h-96 overflow-y-auto text-sm">
-          <!-- List tracking -->
         </div>
-      </div>
+      </main>
 
     </div>
-  </div>
+  </section>
 
-  <script>
-    // GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
-    const API_URL = "https://script.google.com/macros/s/AKfycbw-5_HOel9qiIp6RvKYSeIvXDvMmB4Crhjitl5iYzzrxqJq4Mt01iHweLEaZCkLrQ1L0g/exec"; 
-    
-    let currentUser = { id: "", role: "", nama: "" };
-
-    const SYARAT_DATA = {
-      "Domisili": ["KTP & KK Asli", "Surat Pengantar RT/RW"],
-      "Pindah": ["KK Asli", "KTP", "Alamat Tujuan Lengkap"],
-      "Kelahiran/Kematian": ["Surat Pengantar RS/Bidan/RT", "KK & KTP Orang Tua / Almarhum"],
-      "SKTM": ["KK & KTP", "Surat Pengantar RT", "Pernyataan Miskin Bermaterai"],
-      "SKU": ["KTP", "Foto Tempat Usaha", "Surat Pengantar RT"],
-      "Penghasilan": ["KTP", "Surat Pernyataan Penghasilan ditandatangani"],
-      "Ahli Waris": ["Surat Kematian Pewaris", "KK & KTP Semua Ahli Waris", "Pernyataan Waris dari KUA/Notaris"],
-      "SKT": ["Bukti Kepemilikan (Segel/Kwitansi)", "KTP Pemilik", "Keterangan Batas Tanah"],
-      "Beda Nama": ["KTP & KK", "Dokumen yang salah nama (Ijazah/Sertifikat)"],
-      "SKCK": ["KTP & KK", "Foto 4x6 Background Merah"],
-      "Izin Keramaian": ["KTP Pemohon", "Surat Pengantar RT/RW", "Proposal Acara Singkat"],
-      "Nikah": ["N1, N2, N4 dari Kelurahan/RT", "KTP & KK Calon Pengantin", "Akte Kelahiran"]
-    };
-
-    function login() {
-      const id = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      
-      // Simulasi/Fungsi hit API Sheets
-      fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "login", id: id, password: pass })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.status === "success") {
-          currentUser = { id: id, role: data.role, nama: data.nama };
-          initDashboard();
-        } else {
-          alert("ID atau Password salah!");
-        }
-      }).catch(() => {
-        // Fallback demo lokal jika API belum siap
-        if(id === "admin" || id === "warga") {
-          currentUser = { id: id, role: id, nama: id === "admin" ? "Kepala Desa" : "Warga Potanga" };
-          initDashboard();
-        }
-      });
-    }
-
-    function initDashboard() {
-      document.getElementById("login-page").classList.add("hidden");
-      document.getElementById("main-dashboard").classList.remove("hidden");
-      document.getElementById("user-display").innerText = `${currentUser.nama} (${currentUser.role.toUpperCase()})`;
-
-      if (currentUser.role === "admin") {
-        document.getElementById("admin-menu").classList.remove("hidden");
-        document.getElementById("warga-menu").classList.add("hidden");
-      } else {
-        document.getElementById("admin-menu").classList.add("hidden");
-        document.getElementById("warga-menu").classList.remove("hidden");
-      }
-      loadData();
-    }
-
-    function updateSyarat() {
-      const jenis = document.getElementById("jenis-surat").value;
-      const box = document.getElementById("box-syarat");
-      const list = document.getElementById("list-syarat");
-      
-      if(!jenis) { box.classList.add("hidden"); return; }
-      
-      box.classList.remove("hidden");
-      list.innerHTML = SYARAT_DATA[jenis].map(s => `<li>${s}</li>`).join("");
-    }
-
-    function ajukanSurat() {
-      const jenis = document.getElementById("jenis-surat").value;
-      const catatan = document.getElementById("input-tambahan").value;
-      kirimSurat(jenis, { catatan: catatan });
-    }
-
-    function kirimSurat(jenis, detail) {
-      fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "tambah_surat", jenis: jenis, pengaju: currentUser.nama, detail: detail })
-      }).then(() => {
-        alert("Pengajuan Berhasil Dikirim!");
-        loadData();
-      });
-    }
-
-    function loadData() {
-      // Load Data Pengumuman & Surat dari Sheets
-      fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "get_data" })
-      })
-      .then(res => res.json())
-      .then(data => {
-        // Render Pengumuman
-        const pContainer = document.getElementById("pengumuman-container");
-        pContainer.innerHTML = data.pengumuman.slice(1).map(p => `
-          <div class="border-b pb-2">
-            <h4 class="font-bold text-gray-800">${p[2]} <span class="text-xs font-normal text-gray-400">(${p[1]})</span></h4>
-            <p class="text-sm text-gray-600 mt-1">${p[3]}</p>
-          </div>
-        `).join("");
-
-        // Render Tracking & Admin Table
-        const tContainer = document.getElementById("tracking-container");
-        const adminTable = document.getElementById("tabel-persetujuan");
-        
-        tContainer.innerHTML = "";
-        adminTable.innerHTML = "";
-
-        data.surat.slice(1).forEach(s => {
-          // Tracking untuk Warga
-          tContainer.innerHTML += `
-            <div class="p-3 bg-gray-50 rounded-xl border">
-              <div class="flex justify-between font-bold"><span>${s[2]}</span><span class="text-xs px-2 py-0.5 rounded ${s[5] === 'Pending' ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'}">${s[5]}</span></div>
-              <p class="text-xs text-gray-500 mt-1">Tanggal: ${s[1]}</p>
-            </div>
-          `;
-
-          // Table untuk Admin (Kepala Desa)
-          if(s[5] === "Pending") {
-            adminTable.innerHTML += `
-              <tr class="border-b hover:bg-gray-50">
-                <td class="p-3">${s[1]}</td>
-                <td class="p-3 font-semibold">${s[3]}</td>
-                <td class="p-3">${s[2]}</td>
-                <td class="p-3 text-amber-600 font-bold">${s[5]}</td>
-                <td class="p-3"><button onclick="approve('${s[0]}')" class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-lg font-bold hover:bg-emerald-700">Setujui</button></td>
-              </tr>
-            `;
-          }
-        });
-      });
-    }
-
-    function approve(id) {
-      fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "approve_surat", id: id })
-      }).then(() => {
-        alert("Surat Berhasil Disetujui Kepala Desa!");
-        loadData();
-      });
-    }
-
-    function logout() {
-      document.getElementById("main-dashboard").classList.add("hidden");
-      document.getElementById("login-page").classList.remove("hidden");
-    }
-
-    if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
-}
-  </script>
 </body>
 </html>
